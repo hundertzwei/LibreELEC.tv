@@ -1,0 +1,31 @@
+From d7612e166244a98f029308e0aa23cef1bc4bcd0c Mon Sep 17 00:00:00 2001
+From: Andreas Baierl <ichgeh@imkreisrum.de>
+Date: Mon, 23 Mar 2020 10:57:23 +0100
+Subject: [PATCH 2/4] dt-bindings: Add doc for Eachlink H6 Mini
+
+This adds a compatible for the Eachlinhk H6 Mini 6K TV Box
+
+Signed-off-by: Andreas Baierl <ichgeh@imkreisrum.de>
+---
+ Documentation/devicetree/bindings/arm/sunxi.yaml | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/arm/sunxi.yaml b/Documentation/devicetree/bindings/arm/sunxi.yaml
+index 327ce6730823..1b3757a034a3 100644
+--- a/Documentation/devicetree/bindings/arm/sunxi.yaml
++++ b/Documentation/devicetree/bindings/arm/sunxi.yaml
+@@ -196,6 +196,11 @@ properties:
+           - const: dserve,dsrv9703c
+           - const: allwinner,sun4i-a10
+ 
++      - description: Eachlink H6 Mini
++        items:
++          - const: eachlink,h6-mini
++          - const: allwinner,sun50i-h6
++
+       - description: Empire Electronix D709 Tablet
+         items:
+           - const: empire-electronix,d709
+-- 
+2.20.1
+

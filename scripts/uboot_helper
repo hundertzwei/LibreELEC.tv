@@ -118,6 +118,10 @@ devices = \
         'dtb' : 'sun50i-h6-beelink-gs1.dtb',
         'config' : 'beelink_gs1_defconfig'
       },
+      'eachlink-h6mini' : {
+        'dtb' : 'sun50i-h6-eachlink-h6mini.dtb',
+        'config' : 'eachlink_h6_mini_defconfig'
+      },
       'orangepi-3': {
         'dtb': 'sun50i-h6-orangepi-3.dtb',
         'config': 'orangepi_3_defconfig'

@@ -1,0 +1,30 @@
+From 8f2a46bca091866ffcd116f53fe8651b4b2b0ca9 Mon Sep 17 00:00:00 2001
+From: Andreas Baierl <ichgeh@imkreisrum.de>
+Date: Mon, 23 Mar 2020 10:48:11 +0100
+Subject: [PATCH 1/4] dt-bindings: vendor-prefix: add Eachlink
+
+Eachlink is a the manufacturer of the Eachlink H6 Mini 6K TV Box.
+
+Add its vendor prefix.
+
+Signed-off-by: Andreas Baierl <ichgeh@imkreisrum.de>
+---
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index 9e67944bec9c..81644db43ebd 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -269,6 +269,8 @@ patternProperties:
+     description: dServe Technology B.V.
+   "^ea,.*":
+     description: Embedded Artists AB
++  "^eachlink,.*":
++    description: Eachlink
+   "^ebs-systart,.*":
+     description: EBS-SYSTART GmbH
+   "^ebv,.*":
+-- 
+2.20.1
+
