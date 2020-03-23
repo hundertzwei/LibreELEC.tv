@@ -1,0 +1,152 @@
+From eab796ccc3e984f9fbec3e9355368f088614b16f Mon Sep 17 00:00:00 2001
+From: Andreas Baierl <ichgeh@imkreisrum.de>
+Date: Mon, 23 Mar 2020 10:33:48 +0100
+Subject: [PATCH 4/4] media: rc: add keymap for Eachlink H6 Mini remote control
+
+Eachlink H6 Mini ships with a simple NEC remote
+
+Signed-off-by: Andreas Baierl <ichgeh@imkreisrum.de>
+---
+ .../devicetree/bindings/media/rc.yaml         |  1 +
+ .../allwinner/sun50i-h6-eachlink-h6mini.dts   |  5 ++
+ drivers/media/rc/keymaps/Makefile             |  1 +
+ drivers/media/rc/keymaps/rc-eachlink-h6mini.c | 74 +++++++++++++++++++
+ include/media/rc-map.h                        |  1 +
+ 5 files changed, 82 insertions(+)
+ create mode 100644 drivers/media/rc/keymaps/rc-eachlink-h6mini.c
+
+diff --git a/Documentation/devicetree/bindings/media/rc.yaml b/Documentation/devicetree/bindings/media/rc.yaml
+index a64ee038d235..e92634c4402e 100644
+--- a/Documentation/devicetree/bindings/media/rc.yaml
++++ b/Documentation/devicetree/bindings/media/rc.yaml
+@@ -59,6 +59,7 @@ properties:
+           - rc-dvbsky
+           - rc-dvico-mce
+           - rc-dvico-portable
++          - rc-eachlink-h6mini
+           - rc-em-terratec
+           - rc-empty
+           - rc-encore-enltv
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6-eachlink-h6mini.dts b/arch/arm64/boot/dts/allwinner/sun50i-h6-eachlink-h6mini.dts
+index 53c51d653749..2c67f5607120 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h6-eachlink-h6mini.dts
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h6-eachlink-h6mini.dts
+@@ -86,6 +86,11 @@
+ 	status = "okay";
+ };
+ 
++&r_ir {
++	linux,rc-map-name = "rc-eachlink-h6mini";
++	status = "okay";
++};
++
+ &uart0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&uart0_ph_pins>;
+diff --git a/drivers/media/rc/keymaps/Makefile b/drivers/media/rc/keymaps/Makefile
+index 63261ef6380a..5a92baeb092b 100644
+--- a/drivers/media/rc/keymaps/Makefile
++++ b/drivers/media/rc/keymaps/Makefile
+@@ -37,6 +37,7 @@ obj-$(CONFIG_RC_MAP) += rc-adstech-dvb-t-pci.o \
+ 			rc-dvbsky.o \
+ 			rc-dvico-mce.o \
+ 			rc-dvico-portable.o \
++			rc-eachlink-h6mini.o \
+ 			rc-em-terratec.o \
+ 			rc-encore-enltv2.o \
+ 			rc-encore-enltv.o \
+diff --git a/drivers/media/rc/keymaps/rc-eachlink-h6mini.c b/drivers/media/rc/keymaps/rc-eachlink-h6mini.c
+new file mode 100644
+index 000000000000..767a68768281
+--- /dev/null
++++ b/drivers/media/rc/keymaps/rc-eachlink-h6mini.c
+@@ -0,0 +1,74 @@
++// SPDX-License-Identifier: GPL-2.0+
++// Copyright (c) 2020 Andreas Baierl
++
++#include <media/rc-map.h>
++#include <linux/module.h>
++
++/*
++ * Keymap for the Eachlink H6 Mini remote control
++ */
++
++static struct rc_map_table eachlink_h6mini_table[] = {
++	{ 0xcc1d00, KEY_POWER },
++	{ 0xcc1d0c, KEY_MUTE },
++
++	{ 0xcc1d01, KEY_RED },
++	{ 0xcc1d05, KEY_GREEN },
++	{ 0xcc1d09, KEY_YELLOW },
++	{ 0xcc1d0d, KEY_BLUE },
++
++	{ 0xcc1d02, KEY_VOLUMEDOWN },
++	{ 0xcc1d0e, KEY_VOLUMEUP },
++	{ 0xcc1d06, KEY_PREVIOUS },
++	{ 0xcc1d0a, KEY_NEXT },
++
++	{ 0xcc1d03, KEY_HOME },
++	{ 0xcc1d0f, KEY_BACK },
++	{ 0xcc1d40, KEY_MENU },
++	{ 0xcc1d11, KEY_OK },
++	{ 0xcc1d4c, KEY_SUBTITLE }, /* Mouse */
++
++	{ 0xcc1d07, KEY_UP },
++	{ 0xcc1d44, KEY_DOWN },
++	{ 0xcc1d10, KEY_LEFT },
++	{ 0xcc1d12, KEY_RIGHT },
++
++	{ 0xcc1d41, KEY_1 },
++	{ 0xcc1d45, KEY_2 },
++	{ 0xcc1d4d, KEY_3 },
++	{ 0xcc1d42, KEY_4 },
++	{ 0xcc1d46, KEY_5 },
++	{ 0xcc1d4e, KEY_6 },
++	{ 0xcc1d43, KEY_7 },
++	{ 0xcc1d47, KEY_8 },
++	{ 0xcc1d4f, KEY_9 },
++	{ 0xcc1d49, KEY_0 },
++
++	{ 0xcc1d48, KEY_INFO }, /* 1/A/a */
++	{ 0xcc1d4a, KEY_DELETE },
++};
++
++static struct rc_map_list eachlink_h6mini_map = {
++	.map = {
++		.scan     = eachlink_h6mini_table,
++		.size     = ARRAY_SIZE(eachlink_h6mini_table),
++		.rc_proto = RC_PROTO_NECX,
++		.name     = RC_MAP_EACHLINK_H6MINI,
++	}
++};
++
++static int __init init_rc_map_eachlink_h6mini(void)
++{
++	return rc_map_register(&eachlink_h6mini_map);
++}
++
++static void __exit exit_rc_map_eachlink_h6mini(void)
++{
++	rc_map_unregister(&eachlink_h6mini_map);
++}
++
++module_init(init_rc_map_eachlink_h6mini)
++module_exit(exit_rc_map_eachlink_h6mini)
++
++MODULE_LICENSE("GPL");
++MODULE_AUTHOR("Andreas Baierl <ichgeh@imkreisrum.de>");
+diff --git a/include/media/rc-map.h b/include/media/rc-map.h
+index f99575a0d29c..629049148e78 100644
+--- a/include/media/rc-map.h
++++ b/include/media/rc-map.h
+@@ -188,6 +188,7 @@ struct rc_map *rc_map_get(const char *name);
+ #define RC_MAP_DVBSKY                    "rc-dvbsky"
+ #define RC_MAP_DVICO_MCE		 "rc-dvico-mce"
+ #define RC_MAP_DVICO_PORTABLE		 "rc-dvico-portable"
++#define RC_MAP_EACHLINK_H6MINI           "rc-eachlink-h6mini"
+ #define RC_MAP_EMPTY                     "rc-empty"
+ #define RC_MAP_EM_TERRATEC               "rc-em-terratec"
+ #define RC_MAP_ENCORE_ENLTV              "rc-encore-enltv"
+-- 
+2.20.1
+
