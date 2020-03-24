@@ -122,7 +122,7 @@ index 0b6361a5c172..50d51f69dc5d 100644
  };
  
  &r_ir {
-+	linux,rc-map-name = "rc-tanix-tx5max";
++	linux,rc-map-name = "rc-eachlink-h6mini";
  	status = "okay";
  };
  
